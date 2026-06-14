@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Aaron/Downloads/**)",
+      "Bash(python -c \"import pypdf; r=pypdf.PdfReader\\('Sample Report.pdf'\\); print\\('pages',len\\(r.pages\\)\\); [print\\('---PAGE',i+1,'---\\\\n',p.extract_text\\(\\)\\) for i,p in enumerate\\(r.pages\\)]\")",
+      "Bash(pip install *)",
+      "Bash(python -c \"import pypdf; r=pypdf.PdfReader\\(r'C:\\\\Users\\\\Aaron\\\\Downloads\\\\Sample Report.pdf'\\); print\\('pages',len\\(r.pages\\)\\); [print\\('---PAGE',i+1,'---\\\\n',p.extract_text\\(\\)\\) for i,p in enumerate\\(r.pages\\)]\")",
+      "Bash(python -c \"import pypdf,io; r=pypdf.PdfReader\\(r'C:\\\\Users\\\\Aaron\\\\Downloads\\\\Sample Report.pdf'\\); open\\(r'C:\\\\Users\\\\Aaron\\\\Downloads\\\\sample_report.txt','w',encoding='utf-8'\\).write\\('\\\\n'.join\\('---PAGE %d---\\\\n%s'%\\(i+1,p.extract_text\\(\\)\\) for i,p in enumerate\\(r.pages\\)\\)\\)\")",
+      "Bash(npm -v)",
+      "Bash(git --version)",
+      "PowerShell($ErrorActionPreference='SilentlyContinue'; \"node: \" + \\(& node -v\\); \"npm: \" + \\(& npm -v\\); \"npx: \" + \\(& npx -v\\); \"pnpm: \" + \\(& pnpm -v\\); \"where node: \" + \\(\\(Get-Command node\\).Source\\))",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}
