@@ -16,7 +16,7 @@ import { VerificationBadge } from "@/components/VerificationBadge";
 import { Markdown } from "@/components/Markdown";
 import { downloadDocx } from "@/lib/export/docx";
 
-const STEPS = ["Patient", "HPI Timeline", "History", "Exam", "Narrative", "Report"] as const;
+const STEPS = ["Patient", "History of Illness", "Background", "Exam", "Narrative", "Report"] as const;
 
 export default function Workspace() {
   const params = useParams();

@@ -60,15 +60,16 @@ export function createCase(complaintId: string, complaintLabel: string): CaseRec
   return c;
 }
 
-// Common "prior to admission" anchors for the HPI timeline.
+// Common "prior to admission" anchors for the HPI timeline. Labels are written in plain
+// language for beginners; "PTA" (prior to admission) is explained once in the timeline intro.
 export const PTA_PRESETS: { label: string; hoursPrior: number }[] = [
-  { label: "Onset (apparently well until…)", hoursPrior: 100000 },
-  { label: "2 weeks PTA", hoursPrior: 336 },
-  { label: "1 week PTA", hoursPrior: 168 },
-  { label: "5 days PTA", hoursPrior: 120 },
-  { label: "3 days PTA", hoursPrior: 72 },
-  { label: "2 days PTA", hoursPrior: 48 },
-  { label: "1 day PTA", hoursPrior: 24 },
-  { label: "Few hours PTA", hoursPrior: 4 },
-  { label: "On admission", hoursPrior: 0 },
+  { label: "Onset (first got sick)", hoursPrior: 100000 },
+  { label: "2 weeks before admission", hoursPrior: 336 },
+  { label: "1 week before admission", hoursPrior: 168 },
+  { label: "5 days before admission", hoursPrior: 120 },
+  { label: "3 days before admission", hoursPrior: 72 },
+  { label: "2 days before admission", hoursPrior: 48 },
+  { label: "1 day before admission", hoursPrior: 24 },
+  { label: "A few hours before admission", hoursPrior: 4 },
+  { label: "On admission (arrival)", hoursPrior: 0 },
 ];

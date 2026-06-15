@@ -16,6 +16,7 @@ const HPI_TEMPLATE: QuestionGroup = {
       prompt: "Cough character",
       kind: "multi",
       section: "hpi",
+      required: true,
       options: [
         { id: "none", label: "No cough", phrase: "no cough", negative: true },
         { id: "dry", label: "Dry", phrase: "dry, non-productive cough" },
@@ -49,6 +50,7 @@ const HPI_TEMPLATE: QuestionGroup = {
       prompt: "Associated symptoms",
       kind: "multi",
       section: "hpi",
+      required: true,
       options: [
         { id: "fever", label: "Fever", phrase: "fever" },
         { id: "warm", label: "Warm to touch", phrase: "noted to be warm to touch" },
@@ -78,6 +80,7 @@ const HPI_TEMPLATE: QuestionGroup = {
       prompt: "Medications given (this interval)",
       kind: "multi",
       section: "hpi",
+      dosing: true,
       options: [
         { id: "none", label: "None", negative: true },
         { id: "salbutamol", label: "Salbutamol neb" },
@@ -87,7 +90,7 @@ const HPI_TEMPLATE: QuestionGroup = {
         { id: "paracetamol", label: "Paracetamol" },
         { id: "carbocisteine", label: "Carbocisteine" },
       ],
-      hint: "Use the note field for exact dose / brand / frequency.",
+      hint: "Tap each drug given, then fill its dose, frequency, route & duration.",
     },
     {
       id: "response",

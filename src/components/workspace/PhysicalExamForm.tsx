@@ -5,6 +5,12 @@ import { bmi, hollidaySegarPerDayMl, hollidaySegarRateMlPerHr, lmsZScore, zToPer
 import type { RegionalExamKey } from "@/lib/domain/types";
 import type { WorkspaceProps } from "./types";
 
+// Plain-language hint shown beside jargon-y exam-part labels (display only; the clinical
+// label is still what prints in the report).
+const PART_PLAIN: Partial<Record<RegionalExamKey, string>> = {
+  heent: "head, eyes, ears, nose, throat",
+};
+
 const NORMALS: Partial<Record<RegionalExamKey, string>> = {
   skin: "Warm, good turgor, no rashes, no jaundice.",
   heent: "Anicteric sclerae, pink palpebral conjunctivae, no nasoaural discharge, moist lips, no tonsillopharyngeal congestion.",
@@ -37,19 +43,19 @@ export function PhysicalExamForm({ c, update }: WorkspaceProps) {
       <div className="card p-3">
         <p className="mb-2 text-xs font-semibold text-[var(--muted)]">Vital Signs</p>
         <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
-          {([["hr", "HR"], ["rr", "RR"], ["temp", "T °C"], ["spo2", "SpO₂"]] as const).map(([k, label]) => (
+          {([["hr", "Heart rate (HR)"], ["rr", "Breaths/min (RR)"], ["temp", "Temp (°C)"], ["spo2", "Oxygen % (SpO₂)"]] as const).map(([k, label]) => (
             <label key={k} className="text-xs">{label}
               <input type="number" className="input" value={pe.vitals?.[k] ?? ""} onChange={(e) => update((d) => { d.pe.vitals = { ...d.pe.vitals, [k]: e.target.value ? Number(e.target.value) : undefined }; })} />
             </label>
           ))}
-          <label className="text-xs">BP
+          <label className="text-xs">Blood pressure (BP)
             <input className="input" value={pe.vitals?.bp ?? ""} onChange={(e) => update((d) => { d.pe.vitals = { ...d.pe.vitals, bp: e.target.value }; })} />
           </label>
         </div>
       </div>
 
       <div className="card p-3">
-        <p className="mb-2 text-xs font-semibold text-[var(--muted)]">Anthropometrics</p>
+        <p className="mb-2 text-xs font-semibold text-[var(--muted)]">Growth measurements (anthropometrics)</p>
         <div className="grid grid-cols-3 gap-2">
           <label className="text-xs">Weight (kg)
             <input type="number" className="input" value={w ?? ""} onChange={(e) => update((d) => { d.pe.anthropometrics = { ...d.pe.anthropometrics, weightKg: e.target.value ? Number(e.target.value) : undefined }; })} />
@@ -63,9 +69,9 @@ export function PhysicalExamForm({ c, update }: WorkspaceProps) {
         </div>
         {w && (
           <div className="mt-2 flex flex-wrap gap-3 text-xs text-[var(--accent)]">
-            <span className="inline-flex items-center gap-1"><Calculator size={12} /> Maint. fluids: {hollidaySegarPerDayMl(w)} mL/day ({hollidaySegarRateMlPerHr(w)} mL/hr)</span>
+            <span className="inline-flex items-center gap-1" title="Holliday-Segar maintenance fluids — the daily IV/oral fluid a child this weight needs"><Calculator size={12} /> Daily fluid need (maintenance): {hollidaySegarPerDayMl(w)} mL/day ({hollidaySegarRateMlPerHr(w)} mL/hr)</span>
             {computedBmi && <span>BMI: {computedBmi}</span>}
-            {wfa != null && <span>WFA z (≈6 mo boy): {wfa} ({zToPercentile(wfa)}%ile)</span>}
+            {wfa != null && <span title="Weight-for-age z-score — how far the weight is from the WHO median for age">Weight-for-age score (WFA z): {wfa} ({zToPercentile(wfa)}%ile)</span>}
           </div>
         )}
       </div>
@@ -74,9 +80,12 @@ export function PhysicalExamForm({ c, update }: WorkspaceProps) {
         {REGIONAL_EXAM_PARTS.map((part) => (
           <div key={part.key} className="card p-3">
             <div className="mb-1 flex items-center justify-between">
-              <span className="text-xs font-semibold">{part.label}</span>
+              <span className="text-xs font-semibold">
+                {part.label}
+                {PART_PLAIN[part.key] && <span className="ml-1 font-normal text-[var(--muted)]">· {PART_PLAIN[part.key]}</span>}
+              </span>
               {NORMALS[part.key] && (
-                <button className="chip py-0.5 text-xs" onClick={() => update((d) => { d.pe.findings = { ...d.pe.findings, [part.key]: NORMALS[part.key] }; })}>
+                <button className="chip py-0.5 text-xs" title={`Fill in the standard "normal" ${part.label} findings — edit after if needed`} onClick={() => update((d) => { d.pe.findings = { ...d.pe.findings, [part.key]: NORMALS[part.key] }; })}>
                   Normal
                 </button>
               )}

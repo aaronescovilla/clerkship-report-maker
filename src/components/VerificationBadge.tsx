@@ -11,13 +11,14 @@ export function VerificationBadge({ v }: { v: VerificationResult }) {
       <button type="button" onClick={() => setOpen((o) => !o)} className="flex w-full items-center justify-between px-4 py-3 text-left">
         <span className="flex items-center gap-2 font-semibold" style={{ color }}>
           {v.passed ? <ShieldCheck size={18} /> : <ShieldAlert size={18} />}
-          Verification: {v.score}/100 {v.passed ? "· passed" : "· below threshold"}
+          Quality check: {v.score}/100 {v.passed ? "· passed" : "· needs review"}
           {v.regenerated && <span className="text-xs font-normal text-[var(--muted)]">(regenerated)</span>}
         </span>
         <ChevronDown size={18} className={open ? "rotate-180 transition" : "transition"} />
       </button>
       {open && (
         <div className="border-t border-[var(--border)] px-4 py-3 text-sm">
+          <p className="mb-2 text-xs text-[var(--muted)]">An AI examiner checked this draft against the clerkship rubric. Always read it yourself before submitting.</p>
           {v.summary && <p className="mb-2 text-[var(--muted)]">{v.summary}</p>}
           {v.structural.length > 0 && (
             <div className="mb-2">

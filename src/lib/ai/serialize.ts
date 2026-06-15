@@ -1,5 +1,12 @@
-import type { Answer, CaseRecord, Question, QuestionSet } from "../domain/types";
+import type { Answer, CaseRecord, DrugDetail, Question, QuestionSet } from "../domain/types";
 import { buildQuestionRegistry, REGIONAL_EXAM_PARTS } from "../domain/standardModules";
+
+/** "250 mg PO BID x 5 days" from the structured fields (order: dose, route, frequency, duration). */
+export function formatDrug(d?: DrugDetail): string {
+  if (!d) return "";
+  const parts = [d.dose, d.route, d.frequency, d.duration].map((x) => x?.trim()).filter(Boolean);
+  return parts.length ? " " + parts.join(" ") : "";
+}
 
 function resolveAnswer(q: Question | undefined, a: Answer): string | null {
   const parts: string[] = [];
@@ -8,7 +15,10 @@ function resolveAnswer(q: Question | undefined, a: Answer): string | null {
   } else if (a.selected?.length) {
     const labels = a.selected.map((id) => {
       const opt = q?.options?.find((o) => o.id === id);
-      return opt?.phrase || opt?.label || id;
+      const base = opt?.phrase || opt?.label || id;
+      if (q?.dosing) return `${base}${formatDrug(a.drugs?.[id])}`;
+      const comment = a.comments?.[id]?.trim();
+      return comment ? `${base} (${comment})` : base;
     });
     parts.push(labels.join(", "));
   }

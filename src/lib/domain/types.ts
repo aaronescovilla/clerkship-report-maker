@@ -19,6 +19,25 @@ export interface ChipOption {
   phrase?: string;
   /** Marks a "pertinent negative" chip (e.g. "No fever") for ROS/HPI completeness. */
   negative?: boolean;
+  /**
+   * Optional explicit key into the plain-language GLOSSARY (see lib/domain/glossary.ts).
+   * Falls back to the option `id` when omitted. Display-only — never reaches the AI payload.
+   */
+  term?: string;
+}
+
+/**
+ * Plain-language teaching entry for a piece of clinical jargon. Display-only: lets a
+ * beginner clerk read a friendly label, see the real clinical term, and tap for a definition.
+ * The AI-facing `phrase`/`label` are unaffected, so generated reports stay clinically correct.
+ */
+export interface GlossaryEntry {
+  /** Beginner-friendly primary text shown on the chip/label. */
+  plain: string;
+  /** The clinical term, shown small as secondary text (defaults to the option label). */
+  clinical?: string;
+  /** One short sentence revealed on tap. */
+  definition: string;
 }
 
 export interface SliderConfig {
@@ -46,6 +65,24 @@ export interface Question {
    * addressed; verification flags it if left blank.
    */
   required?: boolean;
+  /**
+   * When true, the selected options are MEDICATIONS: the chip UI reveals
+   * structured dose/frequency/route/duration fields per selected drug, captured
+   * into Answer.drugs (keyed by option id).
+   */
+  dosing?: boolean;
+}
+
+/** Structured detail for a single medication (keyed by option id in Answer.drugs). */
+export interface DrugDetail {
+  /** e.g. "250 mg", "5 mL", "10 mg/kg". */
+  dose?: string;
+  /** e.g. "BID", "q6h PRN", "once". */
+  frequency?: string;
+  /** e.g. "PO", "neb", "IV", "PR". */
+  route?: string;
+  /** e.g. "x 5 days". */
+  duration?: string;
 }
 
 export interface QuestionGroup {
@@ -72,6 +109,16 @@ export interface Answer {
   value?: number;
   /** Free-text "key note" captured outside the chip options. */
   note?: string;
+  /**
+   * Per-option free-text comment, keyed by option id — lets the clerk annotate a
+   * single selected symptom (e.g. fever -> "Tmax 39.5°C, paracetamol-responsive").
+   */
+  comments?: Record<string, string>;
+  /**
+   * Per-option structured medication detail, keyed by option id. Only populated
+   * for questions flagged `dosing`.
+   */
+  drugs?: Record<string, DrugDetail>;
 }
 
 /** One time-anchored entry on the HPI timeline. */

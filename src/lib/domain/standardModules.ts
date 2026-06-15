@@ -16,7 +16,10 @@ function yn(id: string, prompt: string, section: ReportSectionKey, opts: string[
     hint,
     options: [
       { id: "none", label: "None / not applicable", negative: true },
-      ...opts.map((o) => ({ id: o.toLowerCase().replace(/[^a-z0-9]+/g, "-"), label: o })),
+      ...opts.map((o) => {
+        const slug = o.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        return { id: slug, label: o, term: slug };
+      }),
     ],
   };
 }
@@ -33,7 +36,10 @@ const ROS_GROUP: QuestionGroup = {
     section: "ros",
     options: [
       { id: "none", label: "(all negative)", negative: true },
-      ...sys.symptoms.map((s) => ({ id: s.replace(/[^a-z0-9]+/gi, "-").toLowerCase(), label: s })),
+      ...sys.symptoms.map((s) => {
+        const slug = s.replace(/[^a-z0-9]+/gi, "-").toLowerCase().replace(/^-+|-+$/g, "");
+        return { id: slug, label: s, term: slug };
+      }),
     ],
   })),
 };
@@ -94,7 +100,10 @@ const IMMUNIZATION: QuestionGroup = {
       prompt: "Vaccines received",
       kind: "multi",
       section: "immunization",
-      options: VACCINES.map((v) => ({ id: v.replace(/[^a-z0-9]+/gi, "-").toLowerCase(), label: v })),
+      options: VACCINES.map((v) => {
+        const id = v.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+        return { id, label: v, term: id.replace(/^-+|-+$/g, "") };
+      }),
       hint: "Use the note field for doses, ages given, and any reactions.",
     },
     { id: "imm:status", prompt: "Completeness for age", kind: "single", section: "immunization", options: [{ id: "complete", label: "Complete for age" }, { id: "incomplete", label: "Incomplete" }, { id: "unknown", label: "Unknown" }] },

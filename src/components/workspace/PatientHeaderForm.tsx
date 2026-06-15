@@ -43,8 +43,8 @@ export function PatientHeaderForm({ c, update }: WorkspaceProps) {
           </select>
         </Field>
         <Field label="Birth date"><input type="date" className="input" value={h.birthDate ?? ""} onChange={(e) => update((d) => { d.header.birthDate = e.target.value; })} /></Field>
-        <Field label="Informant"><input className="input" value={h.informant ?? ""} onChange={(e) => update((d) => { d.header.informant = e.target.value; })} /></Field>
-        <Field label="Reliability %"><input type="number" className="input" value={h.reliabilityPct ?? ""} onChange={(e) => update((d) => { d.header.reliabilityPct = Number(e.target.value); })} /></Field>
+        <Field label="Informant (who gave the history)"><input className="input" value={h.informant ?? ""} onChange={(e) => update((d) => { d.header.informant = e.target.value; })} /></Field>
+        <Field label="Reliability % (how dependable)"><input type="number" className="input" value={h.reliabilityPct ?? ""} onChange={(e) => update((d) => { d.header.reliabilityPct = Number(e.target.value); })} /></Field>
         <Field label="Hospital"><input className="input" value={h.hospital ?? ""} onChange={(e) => update((d) => { d.header.hospital = e.target.value; })} /></Field>
         <Field label="Attending physician"><input className="input" value={h.attendingPhysician ?? ""} onChange={(e) => update((d) => { d.header.attendingPhysician = e.target.value; })} /></Field>
         <Field label="Group"><input className="input" value={h.group ?? ""} onChange={(e) => update((d) => { d.header.group = e.target.value; })} /></Field>

@@ -70,7 +70,7 @@ function genericFallback(complaintId: string, label: string): QuestionSet {
               { id: "none", label: "None", phrase: "no other associated symptoms", negative: true },
             ],
           },
-          { id: "meds", prompt: "Medications given", kind: "multi", section: "hpi", options: [{ id: "none", label: "None", negative: true }, { id: "other", label: "Yes (note)" }], hint: "Use the note field for drug, dose, frequency." },
+          { id: "meds", prompt: "Medications given", kind: "multi", section: "hpi", dosing: true, options: [{ id: "none", label: "None", negative: true }, { id: "paracetamol", label: "Paracetamol" }, { id: "antibiotic", label: "Antibiotic" }, { id: "other", label: "Other" }], hint: "Tap each drug given, then fill its dose, frequency, route & duration." },
           { id: "response", prompt: "Response", kind: "single", section: "hpi", options: [{ id: "na", label: "N/A" }, { id: "none", label: "No improvement", phrase: "with no improvement" }, { id: "minimal", label: "Minimal relief", phrase: "with minimal relief" }, { id: "improved", label: "Improved", phrase: "with improvement" }] },
           { id: "consult", prompt: "Consult done?", kind: "single", section: "hpi", options: [{ id: "none", label: "No consult", phrase: "no consult was done" }, { id: "private", label: "Private MD", phrase: "sought consult with a private physician" }, { id: "center", label: "Health center", phrase: "sought consult at a health center" }] },
         ],

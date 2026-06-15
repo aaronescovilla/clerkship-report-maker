@@ -40,12 +40,12 @@ Generate a structured pediatric interview QUESTION SET for the given chief compl
 Return ONLY JSON matching this shape:
 {"complaintId":"<id>","specialty":"pediatrics","source":"ai","version":1,"groups":[
  {"id":"hpi-template","title":"What changed at this point in time?","section":"hpi","questions":[
-   {"id":"<slug>","prompt":"<short>","kind":"single|multi|slider","section":"hpi",
+   {"id":"<slug>","prompt":"<short>","kind":"single|multi|slider","section":"hpi","dosing":true|false,
     "options":[{"id":"<slug>","label":"<chip>","phrase":"<canonical clinical phrasing>","negative":true|false}],
     "slider":{"min":0,"max":10,"step":1,"unit":"<unit>"},"hint":"<optional>"}
  ]}
 ]}
-Requirements: the "hpi-template" group is applied to EACH timeline interval, so its questions must capture onset/character, associated symptoms (with explicit pertinent-negative chips), medications given, and response. Chips must be patient/caregiver-answerable observations, never diagnoses. Keep each question to <= 12 options.`;
+Requirements: the "hpi-template" group is applied to EACH timeline interval, so its questions must capture onset/character, associated symptoms (with explicit pertinent-negative chips), medications given, and response. Chips must be patient/caregiver-answerable observations, never diagnoses. Keep each question to <= 12 options. For the medications question set "dosing":true and list common drugs as options (the UI then captures dose/frequency/route/duration per drug).`;
 
 export const JUDGE_SYSTEM = `You are a strict but fair examiner scoring a pediatric clerkship artifact against a rubric.
 For each criterion, return a score from 0.0 to 1.0 and a one-sentence comment citing specifics.

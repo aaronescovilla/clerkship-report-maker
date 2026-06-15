@@ -4,7 +4,7 @@ import { ROS_SYSTEMS } from "../domain/ros";
 import { complete, hasApiKey, parseJson } from "./anthropic";
 import { MODELS } from "./models";
 import { NARRATIVE_SYSTEM, REPORT_SYSTEM } from "./prompts";
-import { serializeCase } from "./serialize";
+import { serializeCase, formatDrug } from "./serialize";
 
 const SECTION_TITLES: Record<ReportSectionKey, string> = {
   generalData: "General Data", chiefComplaint: "Chief Complaint", hpi: "History of Present Illness",
@@ -55,7 +55,10 @@ function phraseFor(q: Question | undefined, a: Answer): string[] {
     .filter((id) => id !== "na")
     .map((id) => {
       const o = q?.options?.find((x) => x.id === id);
-      return o?.phrase || o?.label || id;
+      const base = o?.phrase || o?.label || id;
+      if (q?.dosing) return `${base}${formatDrug(a.drugs?.[id])}`;
+      const comment = a.comments?.[id]?.trim();
+      return comment ? `${base} (${comment})` : base;
     });
 }
 
