@@ -32,6 +32,7 @@ export default function Workspace() {
   useEffect(() => {
     const loaded = getCase(id);
     if (!loaded) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setC(loaded);
     const curated = getCuratedSet(loaded.complaintId);
     if (curated) setSet(curated);
@@ -167,7 +168,7 @@ export default function Workspace() {
                 {c.report && <button className="btn btn-ghost text-sm" onClick={() => downloadDocx(c.report!.markdown, `${c.header.initials || "case"}-report`)}><FileDown size={15} /> DOCX</button>}
               </div>
             </div>
-            {rVerify && <VerificationBadge v={rVerify} />}
+            {rVerify && <div className="no-print"><VerificationBadge v={rVerify} /></div>}
             {c.report ? (
               <div className="print-area"><Markdown source={c.report.markdown} /></div>
             ) : (

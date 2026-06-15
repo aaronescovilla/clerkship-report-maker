@@ -93,19 +93,66 @@ body {
 }
 .input:focus { outline: none; border-color: var(--accent); }
 
-.report-body h1, .report-body h2, .report-body h3 { font-weight: 700; margin: 1rem 0 0.4rem; }
-.report-body h1 { font-size: 1.4rem; }
-.report-body h2 { font-size: 1.15rem; border-bottom: 1px solid var(--border); padding-bottom: 0.2rem; }
-.report-body h3 { font-size: 1rem; color: var(--accent); }
-.report-body p { margin: 0.4rem 0; line-height: 1.55; }
-.report-body strong { font-weight: 700; }
-.report-body ul { margin: 0.4rem 0 0.4rem 1.2rem; list-style: disc; }
+/* ---- report: paper-style preview matching DOCX output ---- */
+.report-preview {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11pt;
+  line-height: 1.4;
+  color: #000;
+  background: #fff;
+  padding: 1.5rem 1.75rem;
+  border-radius: 2px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+}
+.report-preview h1 {
+  font-size: 11pt;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 0.7em;
+}
+.report-preview h2 {
+  font-size: 11pt;
+  font-weight: 700;
+  text-align: center;
+  margin: 0.9em 0 0.25em;
+  border: none;
+  padding: 0;
+  color: #000;
+}
+.report-preview h3 {
+  font-size: 11pt;
+  font-weight: 700;
+  margin: 0.5em 0 0.1em;
+  color: #000;
+}
+.report-preview p {
+  margin: 0 0 0.3em;
+  padding-left: 1.5em;
+  line-height: 1.45;
+}
+.report-preview strong { font-weight: 700; }
+.report-preview em { font-style: italic; }
+.report-preview ul {
+  margin: 0 0 0.3em 2.5em;
+  padding: 0;
+  list-style: disc;
+}
+.report-preview li { margin: 0; line-height: 1.45; }
+.report-preview hr {
+  border: none;
+  border-top: 1px solid #888;
+  margin: 0.7em 0;
+}
 
-/* ---- print: clean PDF output ---- */
+/* ---- print: PDF mirrors the DOCX layout ---- */
 @media print {
   .no-print { display: none !important; }
-  body { background: #fff; color: #000; }
-  .print-area { padding: 0; margin: 0; }
-  .report-body h3 { color: #000; }
-  @page { margin: 1.6cm; }
+  body { background: #fff; }
+  .card { background: #fff !important; border: none !important; border-radius: 0 !important; padding: 0 !important; }
+  .report-preview {
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  @page { margin: 2.54cm 3.17cm; }
 }

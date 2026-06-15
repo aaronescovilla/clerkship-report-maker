@@ -7,6 +7,7 @@ import type { CaseRecord } from "@/lib/domain/types";
 
 export default function Home() {
   const [cases, setCases] = useState<CaseRecord[]>([]);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setCases(listCases()), []);
 
   function remove(id: string) {
